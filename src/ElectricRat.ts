@@ -9,11 +9,11 @@ export class ElectricRat {
     }
 
     if (!Number.isInteger(atk) || atk <= 0) {
-      throw new Error("Az attack értékének pozitív egésznek kell lennie!");
+      throw new Error("Az ATK értékének pozitív egésznek kell lennie!");
     }
 
     if (!Number.isInteger(hp) || hp <= 0) {
-      throw new Error("A hp értékének pozitív egésznek kell lennie!");
+      throw new Error("A HP értékének pozitív egésznek kell lennie!");
     }
 
     this.name = name.trim();

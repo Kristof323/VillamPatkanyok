@@ -1,24 +1,35 @@
 import "./style.css";
 import { ElectricRat } from "./ElectricRat";
 
+const rats: ElectricRat[] = [];
+
 const form = document.querySelector<HTMLFormElement>("#rat-form");
+
 const nameInput = document.querySelector<HTMLInputElement>("#rat-name");
+
 const errorMessage = document.querySelector<HTMLParagraphElement>(
   "#error-message",
 );
+
 const ratsContainer = document.querySelector<HTMLDivElement>(
   "#rats-container",
 );
+
 const emptyMessage = document.querySelector<HTMLParagraphElement>(
   "#empty-message",
 );
+
 const showCsvButton = document.querySelector<HTMLButtonElement>(
   "#show-csv-button",
 );
+
 const downloadCsvButton = document.querySelector<HTMLButtonElement>(
   "#download-csv-button",
 );
-const csvOutput = document.querySelector<HTMLTextAreaElement>("#csv-output");
+
+const csvOutput = document.querySelector<HTMLTextAreaElement>(
+  "#csv-output",
+);
 
 if (
   !form ||
@@ -33,16 +44,17 @@ if (
   throw new Error("Nem található minden szükséges HTML elem.");
 }
 
-const rats: ElectricRat[] = [];
+const validRatsContainer = ratsContainer;
+const validEmptyMessage = emptyMessage;
 
 function randomInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function renderRats(): void {
-  ratsContainer.innerHTML = "";
+  validRatsContainer.innerHTML = "";
 
-  emptyMessage.hidden = rats.length > 0;
+  validEmptyMessage.hidden = rats.length > 0;
 
   for (const rat of rats) {
     const card = document.createElement("article");
@@ -52,13 +64,15 @@ function renderRats(): void {
     title.textContent = rat.name;
 
     const attack = document.createElement("p");
-    attack.innerHTML = `<span>ATK</span> ${rat.atk}`;
+    attack.className = "stat-row";
+    attack.innerHTML = `<span>ATK</span><strong>${rat.atk}</strong>`;
 
     const health = document.createElement("p");
-    health.innerHTML = `<span>HP</span> ${rat.hp}`;
+    health.className = "stat-row";
+    health.innerHTML = `<span>HP</span><strong>${rat.hp}</strong>`;
 
     card.append(title, attack, health);
-    ratsContainer.appendChild(card);
+    validRatsContainer.appendChild(card);
   }
 }
 
