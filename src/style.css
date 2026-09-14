@@ -1,0 +1,14 @@
+.title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.title:hover {
+  color: #ff0000;
+}
+
+.paragraph {
+  font-size: 1em;
+  line-height: 1.5;
+}
+

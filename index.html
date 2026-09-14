@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Villámpatkányok</title>
+  </head>
+
+  <body>
+    <main class="app">
+      <section class="container">
+        <h1>Villámpatkányok</h1>
+
+        <form id="rat-form" class="rat-form">
+          <label for="rat-name">A villámpatkány neve</label>
+
+          <input
+            id="rat-name"
+            type="text"
+            placeholder="Pl.: Mr.Bombastick"
+          />
+
+          <button type="submit">
+            Villámpatkány hozzáadása
+          </button>
+        </form>
+
+        <p id="error-message" class="error"></p>
+
+        <section class="rats-section">
+          <h2>Létrehozott villámpatkányok</h2>
+
+          <div id="rats-container" class="rats-grid"></div>
+
+          <p id="empty-message" class="empty-message">
+            Még nincs létrehozott villámpatkány.
+          </p>
+        </section>
+
+        <section class="export-section">
+          <h2>CSV export</h2>
+
+          <div class="export-buttons">
+            <button id="show-csv-button" type="button">
+              CSV megjelenítése
+            </button>
+
+            <button id="download-csv-button" type="button">
+              CSV letöltése
+            </button>
+          </div>
+
+          <textarea
+            id="csv-output"
+            rows="8"
+            readonly
+            placeholder="csv adatok"
+          ></textarea>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>s
