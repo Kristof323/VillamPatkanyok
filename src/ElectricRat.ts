@@ -1,6 +1,8 @@
 export class ElectricRat {
   public name: string;
+  
   public atk: number;
+
   public hp: number;
 
   constructor(name: string, atk: number, hp: number) {
@@ -12,8 +14,11 @@ export class ElectricRat {
       throw new Error("Az ATK értékének pozitív egésznek kell lennie!");
     }
 
+
+
     if (!Number.isInteger(hp) || hp <= 0) {
-      throw new Error("A HP értékének pozitív egésznek kell lennie!");
+      throw new Error("A HP értékének pozitív egésznek kell lennie!"); 
+
     }
 
     this.name = name.trim();
@@ -23,5 +28,5 @@ export class ElectricRat {
 
   public toCSV(): string {
     return `${this.name};${this.atk};${this.hp}`;
-  }
+      }
 }

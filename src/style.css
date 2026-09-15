@@ -2,60 +2,59 @@
   box-sizing: border-box;
 }
 
+
+
 body {
   margin: 0;
+
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: white;
-  color: black;
 }
 
+
+
 .container {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
 
+
+
 h1 {
-  color: darkblue;
   text-align: center;
 }
 
-h2 {
-  color: darkgreen;
-  margin-top: 30px;
-}
+
 
 .rat-form {
-  width: 400px;
-  max-width: 100%;
+  max-width: 400px;
   margin: 20px auto;
-  padding: 15px;
-  border: 1px solid gray;
 }
 
-.rat-form label {
+
+
+.rat-form label,
+.rat-form input,
+
+.rat-form button {
+
   display: block;
-  margin-bottom: 5px;
+
+
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 input,
-textarea {
-  width: 100%;
+textarea,
+button {
   padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid gray;
+  font: inherit;
 }
 
 button {
-  padding: 8px 12px;
-  border: 1px solid gray;
-  background-color: lightgray;
-  color: black;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: silver;
 }
 
 .error-message {
@@ -70,46 +69,29 @@ button:hover {
 }
 
 .rat-card {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid black;
-  background-color: #f2f2f2;
 }
 
 .rat-card h3 {
   margin-top: 0;
-  color: darkblue;
-}
-
-.stat-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0;
-}
-
-.empty-message {
-  color: gray;
 }
 
 .export-section {
   margin-top: 30px;
-  padding: 15px;
-  border: 1px solid gray;
 }
 
 .export-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
 textarea {
-  resize: vertical;
-}
+  width: 100%;
 
-.visually-hidden {
-  position: absolute;
-  left: -9999px;
+  resize: vertical;
 }
 
 [hidden] {
@@ -126,8 +108,8 @@ textarea {
   }
 
   .export-buttons button {
-    display: block;
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+
   }
 }

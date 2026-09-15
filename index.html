@@ -3,23 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <meta
       name="description"
       content="Villámpatkányok kezelése és CSV exportálása"
     />
+
     <title>Villámpatkányok</title>
   </head>
+
 
   <body>
     <main class="app">
       <div class="container">
         <h1>Villámpatkányok</h1>
+        
 
         <form id="rat-form" class="rat-form">
-          <label for="rat-name">A villámpatkány neve</label>
+          <label for="rat-name">
+            A villámpatkány neve
+          </label>
 
           <input
             id="rat-name"
+            name="name"
             type="text"
             placeholder="Például: Zizegő"
             autocomplete="off"
@@ -32,11 +39,13 @@
 
         <p id="error-message" class="error-message"></p>
 
-        <p id="empty-message" class="empty-message">
-          Még nincs létrehozott villámpatkány.
-        </p>
-
         <section class="rats-section">
+          <h2>Létrehozott villámpatkányok</h2>
+
+          <p id="empty-message" class="empty-message">
+            Még nincs létrehozott villámpatkány.
+          </p>
+
           <div id="rats-container" class="rats-grid"></div>
         </section>
 
@@ -53,8 +62,9 @@
             </button>
           </div>
 
-          <label for="csv-output" class="visually-hidden">
-            CSV adatok
+
+          <label for="csv-output">
+            Elkészített CSV:
           </label>
 
           <textarea
@@ -62,6 +72,7 @@
             rows="8"
             readonly
             placeholder="A CSV-adatok itt jelennek meg..."
+
           ></textarea>
         </section>
       </div>

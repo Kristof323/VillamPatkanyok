@@ -1,133 +1,162 @@
-import "./style.css";
 import { ElectricRat } from "./ElectricRat";
+import "./style.css";
 
-const rats: ElectricRat[] = [];
+// patkanyok listaja
+const patkanyok: ElectricRat[] = [];
 
-const form = document.querySelector<HTMLFormElement>("#rat-form");
 
-const nameInput = document.querySelector<HTMLInputElement>("#rat-name");
 
-const errorMessage = document.querySelector<HTMLParagraphElement>(
-  "#error-message",
-);
 
-const ratsContainer = document.querySelector<HTMLDivElement>(
-  "#rats-container",
-);
 
-const emptyMessage = document.querySelector<HTMLParagraphElement>(
-  "#empty-message",
-);
+document.addEventListener("DOMContentLoaded", () => {
+  // html elemek
+  const ujpatkanyForm =
+    document.getElementById("rat-form") as HTMLFormElement | null;
 
-const showCsvButton = document.querySelector<HTMLButtonElement>(
-  "#show-csv-button",
-);
+  const nevMezo =
+    document.getElementById("rat-name") as HTMLInputElement | null;
 
-const downloadCsvButton = document.querySelector<HTMLButtonElement>(
-  "#download-csv-button",
-);
+  const patkanyLista =
+    document.getElementById("rats-container") as HTMLDivElement | null;
 
-const csvOutput = document.querySelector<HTMLTextAreaElement>(
-  "#csv-output",
-);
+  const uresUzenet =
+    document.getElementById("empty-message") as HTMLParagraphElement | null;
 
-if (
-  !form ||
-  !nameInput ||
-  !errorMessage ||
-  !ratsContainer ||
-  !emptyMessage ||
-  !showCsvButton ||
-  !downloadCsvButton ||
-  !csvOutput
-) {
-  throw new Error("Nem található minden szükséges HTML elem.");
-}
+  const hibaUzenet =
+    document.getElementById("error-message") as HTMLParagraphElement | null;
 
-const validRatsContainer = ratsContainer;
-const validEmptyMessage = emptyMessage;
+  const exportMegjeleniteseGomb =
+    document.getElementById("show-csv-button") as HTMLButtonElement | null;
 
-function randomInteger(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+  const exportLetolteseGomb =
+    document.getElementById("download-csv-button") as HTMLButtonElement | null;
 
-function renderRats(): void {
-  validRatsContainer.innerHTML = "";
+  const exportMezo =
+    document.getElementById("csv-output") as HTMLTextAreaElement | null;
 
-  validEmptyMessage.hidden = rats.length > 0;
-
-  for (const rat of rats) {
-    const card = document.createElement("article");
-    card.className = "rat-card";
-
-    const title = document.createElement("h3");
-    title.textContent = rat.name;
-
-    const attack = document.createElement("p");
-    attack.className = "stat-row";
-    attack.innerHTML = `<span>ATK</span><strong>${rat.atk}</strong>`;
-
-    const health = document.createElement("p");
-    health.className = "stat-row";
-    health.innerHTML = `<span>HP</span><strong>${rat.hp}</strong>`;
-
-    card.append(title, attack, health);
-    validRatsContainer.appendChild(card);
+  if (
+    !ujpatkanyForm ||
+    !nevMezo ||
+    !patkanyLista ||
+    !uresUzenet ||
+    !hibaUzenet ||
+    !exportMegjeleniteseGomb ||
+    !exportLetolteseGomb ||
+    !exportMezo
+  ) {
+    throw new Error("Nem található minden szükséges HTML elem.");
   }
-}
 
-function createCsv(): string {
-  const header = "name;atk;hp";
-  const rows = rats.map((rat) => rat.toCSV());
+  // veletlen szam generator
+  function veletlenEgesz(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-  return [header, ...rows].join("\n");
-}
+  // patkanykartyak megjelenitese
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+  function patkanyokMegjelenitese(): void {
+    patkanyLista!.innerHTML = "";
 
-  try {
-    const rat = new ElectricRat(
-      nameInput.value,
-      randomInteger(10, 20),
-      randomInteger(50, 100),
-    );
+    uresUzenet!.hidden = patkanyok.length !== 0;
 
-    rats.push(rat);
 
-    nameInput.value = "";
-    errorMessage.textContent = "";
 
-    renderRats();
-  } catch (error) {
-    if (error instanceof Error) {
-      errorMessage.textContent = error.message;
-    } else {
-      errorMessage.textContent = "Ismeretlen hiba történt!";
+    for (const patkany of patkanyok) {
+      const ujKartya = document.createElement("article");
+      ujKartya.className = "rat-card";
+
+      const cim = document.createElement("h3");
+      cim.textContent = patkany.name;
+
+      const tamadas = document.createElement("p");
+      tamadas.className = "stat-row";
+      tamadas.innerHTML = `<span>ATK</span> ${patkany.atk}`;
+
+      const eletero = document.createElement("p");
+      eletero.className = "stat-row";
+      eletero.innerHTML = `<span>HP</span> ${patkany.hp}`;
+
+      ujKartya.append(cim, tamadas, eletero);
+      patkanyLista!.appendChild(ujKartya);
     }
+
+
   }
-});
 
-showCsvButton.addEventListener("click", () => {
-  csvOutput.value = createCsv();
-});
+  // csv create
+  function csvLetrehozasa(): string {
+    const fejléc = "name;atk;hp";
 
-downloadCsvButton.addEventListener("click", () => {
-  const csvContent = createCsv();
+    const sorok = patkanyok.map((patkany) => {
+      return patkany.toCSV();
+    });
 
-  const blob = new Blob([csvContent], {
-    type: "text/csv;charset=utf-8;",
+    return [fejléc, ...sorok].join("\n");
+  }
+
+  // uj patkany
+  ujpatkanyForm.addEventListener("submit", (esemeny) => {
+    esemeny.preventDefault();
+
+    const adatok = new FormData(ujpatkanyForm);
+    const nev = adatok.get("name")?.toString() ?? "";
+
+    try {
+      const ujPatkany = new ElectricRat(
+        nev,
+        veletlenEgesz(10, 20),
+        veletlenEgesz(50, 100),
+      );
+
+
+
+
+
+      patkanyok.push(ujPatkany);
+
+      ujpatkanyForm.reset();
+      hibaUzenet.textContent = "";
+
+      patkanyokMegjelenitese();
+    } catch (hiba) {
+      if (hiba instanceof Error) {
+        hibaUzenet.textContent = hiba.message;
+      } else {
+        hibaUzenet.textContent = "Ismeretlen hiba történt!";
+      }
+    }
   });
 
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
+  // csv megjelenitese
+  exportMegjeleniteseGomb.addEventListener("click", () => {
+    exportMezo.value = csvLetrehozasa();
+  });
 
-  link.href = url;
-  link.download = "electric-rats.csv";
 
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
 
-  URL.revokeObjectURL(url);
+
+  // csv letoltese
+  exportLetolteseGomb.addEventListener("click", () => {
+    const csvTartalom = csvLetrehozasa();
+
+    exportMezo.value = csvTartalom;
+
+    const csvFajl = new Blob([csvTartalom], {
+      type: "text/csv;charset=utf-8;",
+    });
+
+    const fajlUrl = URL.createObjectURL(csvFajl);
+    const letoltoLink = document.createElement("a");
+
+    letoltoLink.href = fajlUrl;
+    letoltoLink.download = "villampatkanyok.csv";
+
+    document.body.appendChild(letoltoLink);
+
+    letoltoLink.click();
+
+    letoltoLink.remove();
+
+    URL.revokeObjectURL(fajlUrl);
+  });
 });
